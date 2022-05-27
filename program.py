@@ -1,4 +1,6 @@
-import sqlite3
+#program files
+import db_functions
+import users
 
 #defining start program function
 def StartProgram():
@@ -26,42 +28,27 @@ def StartProgram():
     
     3. save user information to database
     """
+    #CreateDB checks if db exists and creates if doesn't
+    db_functions.CreateDB()
 
-    ### first logical section, a try-except clause to check if database exists
-    try:
-        # if local database already exists clause
-        # leads into either creating a table and creating user credentials
-        # or leads to querying for existing user credentials
-        conn = sqlite3.connect('file:users_data.db?mode=rw', uri=True)
-        cursor = conn.cursor()
-        cursor.close()
-        '''
-        below print is just for unit testing
-        '''
-        print('database found, opened, and closed')
-
-
-    except sqlite3.OperationalError:
-        # 1. create local database
+    #User login
+    #with web app should be a normal login form/button
+    login_action = input('Create a new user profile? ')
+    if login_action.lower().strip() == 'yes':
+        first_user = users.NewUserInstance()
         """
-        uses sqlite3 but in web app will probably use SQLAlchemy
+        below just for unit testing
         """
-        conn = sqlite3.connect('file:users_data.db?mode=rwc', uri=True)
-        cursor = conn.cursor()
-        sql = '''
-            create table weather_users 
-            (
-            name text,
-            temperature real,
-            humidity real
-            )
-        '''
-        cursor.execute(sql)
-        cursor.close()
-        '''
-        below print is just for unit testing
-        '''
-        print('database created!')
+        print(first_user.name, '\n')
+        print(first_user.temp, '\n')
+        print(first_user.humid)
+    else:
+        """
+        unit testing below
+        """
+        print('too bad can only create users right now')
+
+
 
 
 
