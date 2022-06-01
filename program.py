@@ -1,6 +1,5 @@
 #program files
-import db_functions
-import users
+import db_functions, j_weather, users
 
 #defining start program function
 def StartProgram():
@@ -36,12 +35,17 @@ def StartProgram():
     login_action = input('Create a new user profile? ')
     if login_action.lower().strip() == 'yes':
         first_user = users.NewUserInstance()
+        db_functions.saveUser(first_user)
+        climbday1 = j_weather.dayIndex()
+
         """
         below just for unit testing
         """
+        print('from first_user object')
         print(first_user.name, '\n')
         print(first_user.temp, '\n')
-        print(first_user.humid)
+        print(first_user.humid, '\n'*3)
+        print(db_functions.queryAll())
     else:
         """
         unit testing below
