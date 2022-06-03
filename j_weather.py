@@ -7,5 +7,10 @@ def dayIndex():
     days_index = days_out - 1
     return days_index
 
+#calls the api function to get json respons for each city
+#each function grabs a relevant piece of info from response object ex. day info, temp, humid, etc.
 def CreateCityInsta(name, climbday):
     info = waf.getInformationForCityName(name)
+    dayinfo = waf.getDayinfo(info, climbday)
+    cityTemp = waf.getTemp(dayinfo)
+    cityHumid = getHumidity(dayinfo)

@@ -1,6 +1,9 @@
 #program files
 import db_functions, j_weather, users
 
+#bay area list of cities
+cities = ['Los Gatos', 'Berkeley', 'Yosemite', 'Sonora,us', 'Bolinas', 'San Anselmo', 'South Lake Tahoe', 'Monte Rio']
+
 #defining start program function
 def StartProgram():
     print('\n','*'*80)
@@ -37,6 +40,7 @@ def StartProgram():
         first_user = users.NewUserInstance()
         db_functions.saveUser(first_user)
         climbday1 = j_weather.dayIndex()
+        city_data_list = [j_weather.CreateCityInsta(city, climbday1) for city im cities]
 
         """
         below just for unit testing
