@@ -1,10 +1,13 @@
 import requests
 import pprint
 
+the_key = 'df0dbcedccd9b8205dda92325771e2b7'
+
+
 #pings API and returns json list of city info
 def getInformationForCityName(cityName):
-    response = requests.get('http://api.openweathermap.org/data/2.5/forecast/daily?q={}&'
-                            'mode=json&units=imperial&cnt=7'.format(cityName))
+    response = requests.get(f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}'
+                            f'&lon={lon}&exclude={part}&appid={the_key}'.format(cityName))
     cityObj = response.json()
     return cityObj
 
