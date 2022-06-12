@@ -1,8 +1,6 @@
 #program files
 import db_functions, j_weather, users
-
-#bay area list of cities
-cities = ['Los Gatos', 'Berkeley', 'Yosemite', 'Sonora,us', 'Bolinas', 'San Anselmo', 'South Lake Tahoe', 'Monte Rio']
+#import pandas as pd
 
 #defining start program function
 def StartProgram():
@@ -30,8 +28,13 @@ def StartProgram():
     
     3. save user information to database
     """
-    #CreateDB checks if db exists and creates if doesn't
+    #CreateDB checks if user db exists and creates if doesn't
+    #this should eventually be hosted so the creation process is not local to the user
     db_functions.CreateDB()
+
+    #querying locations db - this should be hosted eventually
+    locations_df = db_functions.queryLocations()
+    locations_list = locations_df['name'].tolist()
 
     #User login
     #with web app should be a normal login form/button
@@ -39,8 +42,15 @@ def StartProgram():
     if login_action.lower().strip() == 'yes':
         first_user = users.NewUserInstance()
         db_functions.saveUser(first_user)
-        climbday1 = j_weather.dayIndex()
-        city_data_list = [j_weather.CreateCityInsta(city, climbday1) for city im cities]
+        climbday = j_weather.dayIndex()
+
+        #creates list of city attributes
+        city_data_list = []
+        for location in locations_list:
+            lat = locations_df.loc[locations_df['name']==location,'lat'][0]
+            lon = locations_df.loc[locations_df['name'] == location, 'lon'][0]
+            cityInstance = j_weather.CreateCityInsta(location,lat,lon,climbday)
+            city_data_list.append(cityInstance)
 
         """
         below just for unit testing

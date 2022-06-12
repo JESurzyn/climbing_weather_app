@@ -1,5 +1,7 @@
 import sqlite3
+import pandas as pd
 
+### below for creating the users info table ####
 
 # function to create the db
 # checks if db exists
@@ -49,4 +51,13 @@ def queryAll():
     readout = results.fetchall()
     return readout
     cursor.close()
+
+### below for querying the weather locations table###
+def queryLocations():
+    conn = sqlite3.connect('weather_locations.db')
+    df = pd.read_sql_query('SELECT * FROM geo_data', conn)
+    conn.commit()
+    conn.close()
+    return df
+
 
