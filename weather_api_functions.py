@@ -1,8 +1,8 @@
 import requests
-import pprint
-
-the_key = 'df0dbcedccd9b8205dda92325771e2b7'
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
+the_key = os.environ.get('WEATHER_KEY')
 
 #pings API and returns json list of city info
 def getInformationForCityCoord(lat, lon):
